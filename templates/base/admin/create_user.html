@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!--Create User-->
+    <div class="d-flex justify-content-center mx-3">
+        <div class="col-sm-12 col-md-8 bg-light border py-2 px-3 my-2">
+            <form action="" method="post">
+                {% csrf_token %}
+                <h2 class="text-center">Add User</h2>
+                {{ register_form|crispy }}
+                <div class="form-group my-2">
+                    <button type="submit" class="btn btn-primary btn-block">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

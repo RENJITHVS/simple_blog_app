@@ -1,0 +1,24 @@
+####
+# Django 
+####
+*.log
+*.pot
+*.pyc
+__pycache__/
+
+####
+# templates
+####
+/static  
+.DS_Store  
+
+####
+# Environments
+####
+.venv/
+venv/
+
+###
+# DB
+###
+db.sqlite3  

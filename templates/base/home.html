@@ -1,0 +1,72 @@
+{% extends "main.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row homepage__header justify-content-between">
+            <div class="col-sm-12 col-md-4 fs-2">Blogs</div>
+            <div class="col-sm-12 col-md-4 align-self-end"><a href="{% url 'create-blog' %}" class="btn btn-secondary btn-lg w-100">Create blog</a></div>
+        </div>
+        
+        <div class="row">
+            {% for blog in blogs %}
+                <div class="col-12 my-2">
+                    <div class="card">
+                        <div class="d-flex justify-content-between card-header fs-5 ">
+                        <div class="left">{{ blog.title }}</div>
+                        <div class="right">
+                        {% if request.user == blog.user_data or request.user.is_staff %}
+                        <a href="{% url 'update-blog' blog.pk %}" class="btn btn-primary btn-sm">Update</a>
+                        {% comment %} <a href="" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                        <!-- Button trigger modal -->
+                            <button type="button"
+                                    class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#examplModal-{{ blog.id }}">
+                                Delete
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade"
+                                 id="examplModal-{{ blog.id }}"
+                                 tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p>
+                                                            Are you sure you want to delete this Blog, <strong>{{ blog.title }}</strong> ?
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-danger" href="{% url 'delete-blog' blog.pk %}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-text fs-6">{{ blog.tag_line }}</h5>
+                            <p class="card-text">{{ blog.description }}</p>
+                            <footer class="blockquote-footer">
+                                {{ blog.created|date:"D d M Y" }}
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

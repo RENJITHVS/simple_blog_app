@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <!--Signup-->
+    <h2 class="text-center my-4">Create Blog</h2>
+    <div class="d-flex justify-content-center mx-3">
+        <div class="col-sm-12 col-md-8 bg-light border my-3 px-3 ">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ blog_form|crispy }}
+                <div class="form-group mb-4">
+                    <button type="submit" class="btn btn-primary btn-block w-100">Create Blog</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

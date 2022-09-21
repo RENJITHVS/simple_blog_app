@@ -1,0 +1,41 @@
+<nav class="navbar navbar-light">
+  <div class="container-fluid mx-5">
+    <a class="navbar-brand" href="#">
+      {% if request.user.is_staff %}
+        Welcome Admin
+      {% else %}
+        My App
+      {% endif %}
+    </a>
+    <form class="d-flex ">
+      {% if request.user.is_authenticated %}
+        <ul class="nav-item dropdown ">
+          <a class="dropdown-toggle text-decoration-none fs-5"
+             href="#"
+             id="navbarDarkDropdownMenuLink"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false">
+            {{ request.user.username }}
+          </a>
+          <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
+          {% if request.user.is_staff %}
+            <li>
+              <a class="dropdown-item" href="{% url 'home-page' %}">view site</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'admin-page' %}">admin panel</a>
+            </li>
+          {% endif %}
+            <li>
+              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </li>
+          </ul>
+        </ul>
+      {% else %}
+        <a class="btn btn-primary me-2" href="{% url 'login' %}">Login</a>
+        <a class="btn btn-primary me-2" href="{% url 'signup' %}">Signup</a>
+      {% endif %}
+    </form>
+  </div>
+</nav>

@@ -1,0 +1,90 @@
+{% extends "main.html" %}
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-between  my-3">
+            <p class="fs-4 fw-bold">
+                User Details
+                <a class="btn btn-primary mx-2" href="{% url 'admin-create-user' %}">Create User</a>
+            </p>
+            <!-- Search form -->
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group mb-3">
+                    <input class="form-control"
+                           type="text"
+                           name="keyword"
+                           placeholder="Search"
+                           aria-label="Search"/>
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <table class="table table-hover border rounded overflow-hidden">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">No.</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">first_name</th>
+                    <th scope="col">last_name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <th>{{ user.username }}</th>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm"
+                               href="{% url 'admin-update-user' user.pk %}">Edit</a>
+                            <!-- Button trigger modal -->
+                            <button type="button"
+                                    class="btn btn-danger btn-sm"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#examplModal-{{ user.id }}">
+                                Delete
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade"
+                                 id="examplModal-{{ user.id }}"
+                                 tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <p>
+                                                            Are you sure you want to delete this user, <strong>{{ user.username }}</strong> ?
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-danger" href="{% url 'admin-delete-user' user.id %}">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
